@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "question": "What does STO stand for?",
+    "attempts": 125,
+    "correctResponses": 115,
+    "averageTime": 7,
+    "thumbsUp": 42,
+    "thumbsDown": 2
+  },
+  {
+    "id": 2,
+    "question": "What is the primary purpose of a variable frequency drive?",
+    "attempts": 95,
+    "correctResponses": 70,
+    "averageTime": 18,
+    "thumbsUp": 15,
+    "thumbsDown": 9
+  }
+]
