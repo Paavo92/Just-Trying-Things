@@ -1,6 +1,7 @@
 let questions = [];
 let currentQuestion = 0;
 let score = 0;
+let nextQuestionTimeout;
 
 fetch("data/questions.json")
   .then(response => response.json())
@@ -77,12 +78,12 @@ function checkAnswer(selected) {
     score++;
 
     html +=
-      "<h3 style='color:green'>Correct!</h3>";
+      "<h3 style='color:green'>✅ Correct</h3>";
   }
   else {
 
     html +=
-      "<h3 style='color:red'>Incorrect!</h3>";
+      "<h3 style='color:red'>❌ Incorrect</h3>";
   }
 
   html +=
@@ -91,21 +92,69 @@ function checkAnswer(selected) {
     "</p>";
 
   html +=
-    "<p>Next question in 3 seconds...</p>";
+    "<hr>" +
+    "<p>Was this question useful?</p>" +
+    "<button onclick='thumbsUp()'>👍 Helpful</button> " +
+    "<button onclick='thumbsDown()'>👎 Needs Review</button>";
 
   document.getElementById("output").innerHTML = html;
 
-  setTimeout(() => {
+  nextQuestionTimeout = setTimeout(moveToNextQuestion, 5000);
+}
 
-    currentQuestion++;
+function moveToNextQuestion() {
 
-    if (currentQuestion < questions.length) {
-      showQuestion();
-    } else {
-      showResults();
-    }
+  currentQuestion++;
 
-  }, 3000);
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  }
+  else {
+    showResults();
+  }
+}
+
+function thumbsUp() {
+
+  clearTimeout(nextQuestionTimeout);
+
+  document.getElementById("output").innerHTML +=
+    "<p>👍 Feedback recorded.</p>";
+
+  setTimeout(moveToNextQuestion, 1000);
+}
+
+function thumbsDown() {
+
+  clearTimeout(nextQuestionTimeout);
+
+  document.getElementById("output").innerHTML +=
+    "<hr>" +
+    "<p>Why does this question need review?</p>" +
+
+    "<button onclick=\"submitIssue('Question unclear')\">Question unclear</button><br><br>" +
+
+    "<button onclick=\"submitIssue('Multiple answers seem correct')\">Multiple answers seem correct</button><br><br>" +
+
+    "<button onclick=\"submitIssue('Material did not cover this')\">Material did not cover this</button><br><br>" +
+
+    "<button onclick=\"submitIssue('Typo or factual error')\">Typo or factual error</button><br><br>" +
+
+    "<button onclick=\"submitIssue('Too difficult')\">Too difficult</button>";
+}
+
+function submitIssue(reason) {
+
+  console.log(
+    "Question Review Requested:",
+    questions[currentQuestion].id,
+    reason
+  );
+
+  document.getElementById("output").innerHTML +=
+    "<p>👎 Feedback recorded: " + reason + "</p>";
+
+  setTimeout(moveToNextQuestion, 2000);
 }
 
 function showResults() {
