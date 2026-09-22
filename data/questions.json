@@ -1,18 +1,16 @@
 [
   {
-    "id": 1,
-    "course": "ACS880 Fundamentals",
-    "level": "Beginner",
-    "question": "What does STO stand for?",
-    "options": [
-      "Safe Torque Off",
-      "System Test Output",
-      "Safety Terminal Output",
-      "Safe Turn Operation"
-    ],
-    "correctAnswer": "Safe Torque Off",
-    "status": "approved"
-  },
+  "id": 1,
+  "question": "What does STO stand for?",
+  "options": [
+    "Safe Torque Off",
+    "System Test Output",
+    "Safety Terminal Output",
+    "Safe Turn Operation"
+  ],
+  "correctAnswer": "Safe Torque Off",
+  "explanation": "STO safely removes torque-producing power from the motor while maintaining drive control electronics."
+},
   {
     "id": 2,
     "course": "ACS880 Fundamentals",
