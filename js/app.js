@@ -1,35 +1,63 @@
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+
 fetch("data/questions.json")
   .then(response => response.json())
-  .then(questions => {
-
-    const question = questions[0];
-
-    let html = "<h2>" + question.question + "</h2>";
-
-    question.options.forEach(option => {
-      html +=
-        "<button onclick=\"checkAnswer('" +
-        option +
-        "')\">" +
-        option +
-        "</button><br><br>";
-    });
-
-    html += "<div id='result'></div>";
-
-    document.getElementById("output").innerHTML = html;
-
-    window.correctAnswer = question.correctAnswer;
+  .then(data => {
+    questions = data;
+    showQuestion();
   });
+
+function showQuestion() {
+
+  const question = questions[currentQuestion];
+
+  let html =
+    "<h2>Question " +
+    (currentQuestion + 1) +
+    " of " +
+    questions.length +
+    "</h2>";
+
+  html += "<p>" + question.question + "</p>";
+
+  question.options.forEach(option => {
+    html +=
+      "<button onclick=\"checkAnswer('" +
+      option +
+      "')\">" +
+      option +
+      "</button><br><br>";
+  });
+
+  html += "<p>Score: " + score + "</p>";
+
+  document.getElementById("output").innerHTML = html;
+}
 
 function checkAnswer(selected) {
 
-  if (selected === window.correctAnswer) {
-    document.getElementById("result").innerHTML =
-      "<h3 style='color:green'>Correct!</h3>";
-  } else {
-    document.getElementById("result").innerHTML =
-      "<h3 style='color:red'>Incorrect!</h3>" +
-      "<p>Correct answer: " + window.correctAnswer + "</p>";
+  if (selected === questions[currentQuestion].correctAnswer) {
+    score++;
   }
+
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+
+  document.getElementById("output").innerHTML =
+    "<h2>Assessment Complete</h2>" +
+    "<p>Your score: " +
+    score +
+    " / " +
+    questions.length +
+    "</p>";
 }
