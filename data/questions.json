@@ -1,20 +1,19 @@
 [
   {
-  "id": 1,
-  "question": "What does STO stand for?",
-  "options": [
-    "Safe Torque Off",
-    "System Test Output",
-    "Safety Terminal Output",
-    "Safe Turn Operation"
-  ],
-  "correctAnswer": "Safe Torque Off",
-  "explanation": "STO safely removes torque-producing power from the motor while maintaining drive control electronics."
-},
+    "id": 1,
+    "question": "What does STO stand for?",
+    "options": [
+      "Safe Torque Off",
+      "System Test Output",
+      "Safety Terminal Output",
+      "Safe Turn Operation"
+    ],
+    "correctAnswer": "Safe Torque Off",
+    "explanation": "STO safely removes torque-producing power from the motor while maintaining drive control electronics.",
+    "timeLimit": 15
+  },
   {
     "id": 2,
-    "course": "ACS880 Fundamentals",
-    "level": "Beginner",
     "question": "What is the primary purpose of a variable frequency drive?",
     "options": [
       "Control motor speed",
@@ -23,6 +22,7 @@
       "Cool the motor"
     ],
     "correctAnswer": "Control motor speed",
-    "status": "approved"
+    "explanation": "A VFD adjusts motor speed and torque by varying frequency and voltage supplied to the motor.",
+    "timeLimit": 30
   }
 ]
