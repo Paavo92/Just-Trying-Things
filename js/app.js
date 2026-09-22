@@ -38,21 +38,62 @@ function showQuestion() {
 
 function checkAnswer(selected) {
 
-  let message = "";
+  let question = questions[currentQuestion];
 
-  if (selected === questions[currentQuestion].correctAnswer) {
+  let html =
+    "<h2>Question " +
+    (currentQuestion + 1) +
+    " of " +
+    questions.length +
+    "</h2>";
+
+  html += "<p>" + question.question + "</p>";
+
+  question.options.forEach(option => {
+
+    let color = "";
+
+    if (option === question.correctAnswer) {
+      color = "background-color: lightgreen;";
+    }
+
+    if (
+      option === selected &&
+      selected !== question.correctAnswer
+    ) {
+      color = "background-color: salmon;";
+    }
+
+    html +=
+      "<button style='" +
+      color +
+      "' disabled>" +
+      option +
+      "</button><br><br>";
+  });
+
+  if (selected === question.correctAnswer) {
+
     score++;
-    message =
+
+    html +=
       "<h3 style='color:green'>Correct!</h3>";
-  } else {
-    message =
-      "<h3 style='color:red'>Incorrect!</h3>" +
-      "<p>Correct answer: " +
-      questions[currentQuestion].correctAnswer +
-      "</p>";
+  }
+  else {
+
+    html +=
+      "<h3 style='color:red'>Incorrect!</h3>";
   }
 
-  document.getElementById("output").innerHTML = message;
+  html +=
+    "<p><strong>Explanation:</strong> " +
+    question.explanation +
+    "</p>";
+
+  html +=
+    "<p>Next question in 3 seconds...</p>";
+
+  document.getElementById("output").innerHTML = html;
 
   setTimeout(() => {
 
