@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "course": "ACS880 Fundamentals",
+    "level": "Beginner",
+    "question": "What does STO stand for?",
+    "options": [
+      "Safe Torque Off",
+      "System Test Output",
+      "Safety Terminal Output",
+      "Safe Turn Operation"
+    ],
+    "correctAnswer": "Safe Torque Off",
+    "status": "approved"
+  },
+  {
+    "id": 2,
+    "course": "ACS880 Fundamentals",
+    "level": "Beginner",
+    "question": "What is the primary purpose of a variable frequency drive?",
+    "options": [
+      "Control motor speed",
+      "Increase motor voltage",
+      "Measure vibration",
+      "Cool the motor"
+    ],
+    "correctAnswer": "Control motor speed",
+    "status": "approved"
+  }
+]
