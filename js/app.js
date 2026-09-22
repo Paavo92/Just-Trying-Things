@@ -2,6 +2,8 @@ let questions = [];
 let currentQuestion = 0;
 let score = 0;
 let nextQuestionTimeout;
+let timerInterval;
+let timeRemaining;
 
 fetch("data/questions.json")
   .then(response => response.json())
@@ -14,12 +16,25 @@ function showQuestion() {
 
   const question = questions[currentQuestion];
 
+timeRemaining = question.timeLimit;
+
+clearInterval(timerInterval);
+
   let html =
     "<h2>Question " +
     (currentQuestion + 1) +
     " of " +
     questions.length +
     "</h2>";
+  html +=
+  "<div style='width:300px;border:1px solid black;height:20px;margin-bottom:10px;'>" +
+  "<div id='timerBar' style='background-color:green;height:100%;width:100%;'></div>" +
+  "</div>";
+
+html +=
+  "<p>Time Remaining: <span id='timerText'>" +
+  timeRemaining +
+  "</span> s</p>";
 
   html += "<p>" + question.question + "</p>";
 
@@ -35,10 +50,49 @@ function showQuestion() {
   html += "<p>Score: " + score + "</p>";
 
   document.getElementById("output").innerHTML = html;
+  timerInterval = setInterval(function() {
+
+  timeRemaining--;
+
+  const timerText =
+    document.getElementById("timerText");
+
+  const timerBar =
+    document.getElementById("timerBar");
+
+  if (timerText) {
+    timerText.innerText = timeRemaining;
+  }
+
+  if (timerBar) {
+
+    let percentage =
+      (timeRemaining / question.timeLimit) * 100;
+
+    timerBar.style.width =
+      percentage + "%";
+
+    if (percentage < 30) {
+      timerBar.style.backgroundColor = "red";
+    }
+    else if (percentage < 60) {
+      timerBar.style.backgroundColor = "orange";
+    }
+  }
+
+  if (timeRemaining <= 0) {
+
+    clearInterval(timerInterval);
+
+    timeExpired();
+  }
+
+}, 1000);
 }
 
 function checkAnswer(selected) {
-
+  
+  clearInterval(timerInterval);
   let question = questions[currentQuestion];
 
   let html =
@@ -166,4 +220,40 @@ function showResults() {
     " / " +
     questions.length +
     "</p>";
+}
+function timeExpired() {
+
+  let question = questions[currentQuestion];
+
+  let html =
+    "<h2>Time Expired</h2>";
+
+  html +=
+    "<p>The correct answer was:</p>";
+
+  html +=
+    "<h3>" +
+    question.correctAnswer +
+    "</h3>";
+
+  html +=
+    "<p><strong>Explanation:</strong> " +
+    question.explanation +
+    "</p>";
+
+  document.getElementById("output").innerHTML =
+    html;
+
+  setTimeout(() => {
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+      showQuestion();
+    }
+    else {
+      showResults();
+    }
+
+  }, 5000);
 }
