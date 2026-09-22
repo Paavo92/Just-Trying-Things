@@ -38,17 +38,33 @@ function showQuestion() {
 
 function checkAnswer(selected) {
 
+  let message = "";
+
   if (selected === questions[currentQuestion].correctAnswer) {
     score++;
-  }
-
-  currentQuestion++;
-
-  if (currentQuestion < questions.length) {
-    showQuestion();
+    message =
+      "<h3 style='color:green'>Correct!</h3>";
   } else {
-    showResults();
+    message =
+      "<h3 style='color:red'>Incorrect!</h3>" +
+      "<p>Correct answer: " +
+      questions[currentQuestion].correctAnswer +
+      "</p>";
   }
+
+  document.getElementById("output").innerHTML = message;
+
+  setTimeout(() => {
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+      showQuestion();
+    } else {
+      showResults();
+    }
+
+  }, 3000);
 }
 
 function showResults() {
